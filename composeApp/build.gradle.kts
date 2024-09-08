@@ -4,15 +4,19 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
+//    alias(libs.plugins.serialization)
+//    alias(libs.plugins.rpc.platform)
 }
 
 kotlin {
     jvm("desktop")
-    
+
     sourceSets {
         val desktopMain by getting
-        
+
         commonMain.dependencies {
+            implementation(project(":core"))
+            implementation(project(":server"))
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -21,10 +25,18 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            // DI
+            implementation(libs.koin.compose)
+            implementation(libs.koin.composeVM)
+
+            // Navigation
+            implementation(libs.navigation)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
             implementation(libs.kotlinx.coroutines.swing)
+            implementation(project(":server"))
         }
     }
 }
