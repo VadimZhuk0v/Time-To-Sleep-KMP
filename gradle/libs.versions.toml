@@ -10,6 +10,7 @@ ktor = "2.3.12"
 ksp = "2.0.20-1.0.24"
 kotlin-rpc = "0.2.4"
 logbackClassic = "1.5.6"
+kottie = "1.9.6"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -38,6 +39,9 @@ koin-composeVM = { group = "io.insert-koin", name = "koin-compose-viewmodel", ve
 
 #ktor
 ktor-server = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+
+#kottie
+kottie = { module = "io.github.ismai117:kottie", version.ref = "kottie" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }

@@ -19,7 +19,7 @@ kotlin {
             implementation(project(":server"))
             implementation(compose.runtime)
             implementation(compose.foundation)
-            implementation(compose.material)
+            implementation(compose.material3)
             implementation(compose.ui)
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
@@ -32,6 +32,9 @@ kotlin {
 
             // Navigation
             implementation(libs.navigation)
+
+            //Kottie
+            implementation(libs.kottie)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
