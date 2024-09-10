@@ -1,9 +1,8 @@
 package com.vadmax.timetosleep.di
 
-import com.vadmax.timetosleep.ui.main.MainViewModel
-import org.koin.core.module.dsl.viewModel
-import org.koin.dsl.module
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
 
-val viewModelModule = module {
-    viewModel { MainViewModel() }
-}
+@Module
+@ComponentScan("com.vadmax.timetosleep.ui")
+class ViewModelModule

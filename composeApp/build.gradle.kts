@@ -4,18 +4,21 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.jetbrainsCompose)
     alias(libs.plugins.compose.compiler)
-//    alias(libs.plugins.serialization)
-//    alias(libs.plugins.rpc.platform)
+    alias(libs.plugins.google.ksp)
 }
 
 kotlin {
     jvm("desktop")
-
+    dependencies {
+        add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+        add("kspDesktop", libs.koin.ksp.compiler)
+    }
     sourceSets {
         val desktopMain by getting
 
         commonMain.dependencies {
             implementation(project(":core"))
+            implementation(project(":domain"))
             implementation(project(":server"))
             implementation(compose.runtime)
             implementation(compose.foundation)
@@ -38,12 +41,17 @@ kotlin {
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutines.swing)
-            implementation(project(":server"))
         }
+    }
+
+    composeCompiler {
+        enableStrongSkippingMode = true
     }
 }
 
+ksp {
+    arg("KOIN_USE_COMPOSE_VIEWMODEL", "true")
+}
 
 compose.desktop {
     application {

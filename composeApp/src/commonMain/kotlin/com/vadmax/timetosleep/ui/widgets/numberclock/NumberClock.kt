@@ -6,11 +6,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.vadmax.timetosleep.data.TimeUIModel
 import com.vadmax.timetosleep.ui.theme.clock
+import kotlinx.coroutines.flow.collectLatest
 
 private val itemHeight = 60.dp
 
@@ -18,6 +22,7 @@ private val itemHeight = 60.dp
 fun NumberClock(
     isVibrationEnable: Boolean,
     numberClockState: NumberClockState,
+    onChangeByUser: (TimeUIModel) -> Unit = {},
 ) {
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier) {
         ProvideTextStyle(
@@ -39,6 +44,13 @@ fun NumberClock(
                 horizontalAlignment = Alignment.Start,
                 itemsCount = 60,
             )
+        }
+    }
+    LaunchedEffect(numberClockState) {
+        snapshotFlow { numberClockState.time }.collectLatest {
+            if (numberClockState.scrolledProgrammatically.not()) {
+                onChangeByUser(it)
+            }
         }
     }
 }

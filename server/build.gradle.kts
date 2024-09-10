@@ -1,8 +1,8 @@
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
     alias(libs.plugins.serialization)
-//    alias(libs.plugins.ktor)
     alias(libs.plugins.rpc.platform)
+    alias(libs.plugins.google.ksp)
 }
 
 kotlin {
@@ -12,6 +12,7 @@ kotlin {
         val desktopMain by getting
         commonMain.dependencies {
             implementation(project(":core"))
+            implementation(project(":domain"))
             implementation(libs.ktor.server)
 
             //RPC

@@ -7,10 +7,11 @@ kotlinx-coroutines = "1.8.1"
 koin = "4.0.0-RC2"
 navigation = "2.7.0-alpha07"
 ktor = "2.3.12"
-ksp = "2.0.20-1.0.24"
+ksp = "2.0.10-1.0.24"
 kotlin-rpc = "0.2.4"
 logbackClassic = "1.5.6"
 kottie = "1.9.6"
+koin-annotation = "1.4.0-RC4"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -24,7 +25,6 @@ kotlinx-rpc-json = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-serializat
 kotlinx-rpc-client = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-client" }
 kotlinx-rpc-client-ktor = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-client" }
 kotlinx-rpc-server = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-server" }
-kotlinx-rpc-cli = { module = "org.jetbrains.kotlinx:kotlinx-rpc-compiler-plugin-cli" }
 logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "logbackClassic" }
 
 androidx-lifecycle-viewmodel = { group = "org.jetbrains.androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
@@ -33,9 +33,12 @@ navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-c
 kotlinx-coroutines-swing = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-swing", version.ref = "kotlinx-coroutines" }
 
 #koin
-koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
-koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koin" }
-koin-composeVM = { group = "io.insert-koin", name = "koin-compose-viewmodel", version.ref = "koin" }
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin" }
+koin-core = { group = "io.insert-koin", name = "koin-core" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose" }
+koin-composeVM = { group = "io.insert-koin", name = "koin-compose-viewmodel" }
+koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotation" }
+koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotation" }
 
 #ktor
 ktor-server = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
@@ -49,4 +52,5 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 rpc-platform = { id = "org.jetbrains.kotlinx.rpc.plugin", version.ref = "kotlin-rpc" }
+google-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor" }
