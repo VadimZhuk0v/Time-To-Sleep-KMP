@@ -64,6 +64,7 @@ fun main() {
                 onCloseRequest = { showApp = false },
                 title = "Time To Sleep",
                 resizable = false,
+                icon = painterResource(Res.drawable.ic_launcher_round),
             ) {
                 App()
             }

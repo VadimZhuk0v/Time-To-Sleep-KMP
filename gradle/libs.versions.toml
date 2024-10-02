@@ -12,6 +12,7 @@ kotlin-rpc = "0.2.4"
 logbackClassic = "1.5.6"
 kottie = "1.9.6"
 koin-annotation = "1.4.0-RC4"
+qr-kit = "2.0.0"
 
 [libraries]
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -45,6 +46,9 @@ ktor-server = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
 
 #kottie
 kottie = { module = "io.github.ismai117:kottie", version.ref = "kottie" }
+
+#QR
+qr-kit = { module = "network.chaintech:qr-kit", version.ref = "qr-kit" }
 
 [plugins]
 jetbrainsCompose = { id = "org.jetbrains.compose", version.ref = "compose-plugin" }

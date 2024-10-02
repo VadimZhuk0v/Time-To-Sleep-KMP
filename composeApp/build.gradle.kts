@@ -20,6 +20,7 @@ kotlin {
             implementation(project(":core"))
             implementation(project(":domain"))
             implementation(project(":server"))
+            implementation(compose.materialIconsExtended)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material3)
@@ -28,6 +29,7 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+            implementation(libs.qr.kit)
 
             // DI
             implementation(libs.koin.compose)

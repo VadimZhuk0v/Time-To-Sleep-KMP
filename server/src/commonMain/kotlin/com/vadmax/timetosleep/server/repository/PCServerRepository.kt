@@ -5,6 +5,7 @@ import com.vadimax.timetosleep.remote.rcp.service.PCService
 import com.vadimax.timetosleep.remote.rcp.service.PCServiceImpl
 import com.vadmax.timetosleep.domain.usecases.remote.GetSelectedTime
 import com.vadmax.timetosleep.domain.usecases.remote.GetTimerEnabled
+import com.vadmax.timetosleep.domain.usecases.remote.SetPhoneConnected
 import com.vadmax.timetosleep.domain.usecases.remote.SetSelectedTime
 import com.vadmax.timetosleep.domain.usecases.remote.SetTimerEnable
 import io.ktor.server.application.install
@@ -26,6 +27,7 @@ internal class PCServerRepositoryImpl(
     private val getSelectedTime: GetSelectedTime,
     private val getTimerEnabled: GetTimerEnabled,
     private val setEnabled: SetTimerEnable,
+    private val setPhoneConnected: SetPhoneConnected,
 ) : PCServerRepository {
 
 
@@ -46,6 +48,7 @@ internal class PCServerRepositoryImpl(
                             getSelectedTime = getSelectedTime,
                             getTimerEnabled = getTimerEnabled,
                             setEnabled = setEnabled,
+                            setPhoneConnected = setPhoneConnected,
                         )
                     }
                 }

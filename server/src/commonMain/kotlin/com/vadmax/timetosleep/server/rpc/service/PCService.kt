@@ -3,6 +3,7 @@ package com.vadimax.timetosleep.remote.rcp.service
 import co.touchlab.kermit.Logger
 import com.vadmax.timetosleep.domain.usecases.remote.GetSelectedTime
 import com.vadmax.timetosleep.domain.usecases.remote.GetTimerEnabled
+import com.vadmax.timetosleep.domain.usecases.remote.SetPhoneConnected
 import com.vadmax.timetosleep.domain.usecases.remote.SetSelectedTime
 import com.vadmax.timetosleep.domain.usecases.remote.SetTimerEnable
 import com.vadmax.timetosleep.server.rpc.data.TimeRemoteModel
@@ -15,8 +16,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.shareIn
+import kotlinx.coroutines.flow.onStart
 import kotlinx.rpc.RPC
 import kotlin.coroutines.CoroutineContext
 
@@ -40,6 +42,7 @@ class PCServiceImpl(
     private val getSelectedTime: GetSelectedTime,
     private val getTimerEnabled: GetTimerEnabled,
     private val setEnabled: SetTimerEnable,
+    private val setPhoneConnected: SetPhoneConnected,
 ) : PCService {
 
     override suspend fun pingStatus(): Flow<Unit> {
@@ -48,6 +51,10 @@ class PCServiceImpl(
                 emit(Unit)
                 delay(2000)
             }
+        }.onStart {
+            setPhoneConnected(true)
+        }.onCompletion {
+            setPhoneConnected(false)
         }
     }
 

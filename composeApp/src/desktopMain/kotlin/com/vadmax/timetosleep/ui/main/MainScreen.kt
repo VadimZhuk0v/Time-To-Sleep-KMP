@@ -20,14 +20,16 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import co.touchlab.kermit.Logger
 import com.vadmax.timetosleep.data.TimeUIModel
+import com.vadmax.timetosleep.ui.main.ui.BackdropContent
+import com.vadmax.timetosleep.ui.main.ui.BackdropToolbar
 import com.vadmax.timetosleep.ui.main.ui.MainScreenState
+import com.vadmax.timetosleep.ui.widgets.backdrop.Backdrop
+import com.vadmax.timetosleep.ui.widgets.backdrop.rememberBackdropState
 import com.vadmax.timetosleep.ui.widgets.numberclock.NumberClock
 import com.vadmax.timetosleep.ui.widgets.numberclock.rememberNumberClockState
 import com.vadmax.timetosleep.utils.extentions.clickableNoRipple
 import com.vadmax.timetosleep.utils.flow.SingleEventEffect
-import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.withContext
 import kottieComposition.KottieCompositionSpec
 import kottieComposition.animateKottieCompositionAsState
 import kottieComposition.rememberKottieComposition
@@ -43,22 +45,26 @@ fun MainScreen(
 ) {
     val enabled by viewModel.enabled.collectAsStateWithLifecycle()
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
+    val connectQRData by viewModel.connectQRData.collectAsStateWithLifecycle()
+    val phoneConnected by viewModel.phoneConnected.collectAsStateWithLifecycle()
 
     MainContent(
         screenState = screenState,
         enabled = enabled,
+        connectQRData = connectQRData,
+        phoneConnected = phoneConnected,
         setTime = viewModel::setTime,
         switchEnable = viewModel::switchEnable,
         selectTime = viewModel.selectTime,
     )
-
-
 }
 
 @Composable
 private fun MainContent(
     screenState: MainScreenState,
     enabled: Boolean,
+    phoneConnected: Boolean,
+    connectQRData: String,
     selectTime: Flow<TimeUIModel>,
     switchEnable: () -> Unit,
     setTime: (TimeUIModel) -> Unit,
@@ -77,7 +83,9 @@ private fun MainContent(
                     selectTime = selectTime,
                     enabled = enabled,
                     switchEnable = switchEnable,
-                    setTime = setTime
+                    setTime = setTime,
+                    connectQRData = connectQRData,
+                    phoneConnected = phoneConnected,
                 )
             }
         }
@@ -94,6 +102,8 @@ private fun IdleScreenState(modifier: Modifier = Modifier) {
 @Composable
 private fun TimerScreenState(
     screenState: MainScreenState.Time,
+    connectQRData: String,
+    phoneConnected: Boolean,
     selectTime: Flow<TimeUIModel>,
     enabled: Boolean,
     switchEnable: () -> Unit,
@@ -101,19 +111,36 @@ private fun TimerScreenState(
     modifier: Modifier = Modifier
 ) {
     val clockState = rememberNumberClockState(screenState.initialTime)
-    Column(
-        modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+    val backdropState = rememberBackdropState()
+
+    Backdrop(
+        state = backdropState,
+        toolbar = {
+            BackdropToolbar(
+                connected = phoneConnected,
+                switchBackdropSate = { backdropState.switch() },
+            )
+        },
+        backdropContent = {
+            BackdropContent(
+                connectQRData = connectQRData,
+            )
+        },
     ) {
-        NumberClock(
-            isVibrationEnable = false,
-            numberClockState = clockState,
-            onChangeByUser = setTime,
-        )
-        Moon(
-            enabled = enabled,
-            switchEnable = switchEnable,
-        )
+        Column(
+            modifier = modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            NumberClock(
+                isVibrationEnable = false,
+                numberClockState = clockState,
+                onChangeByUser = setTime,
+            )
+            Moon(
+                enabled = enabled,
+                switchEnable = switchEnable,
+            )
+        }
     }
     val coroutineScope = rememberCoroutineScope()
     SingleEventEffect(selectTime) {
@@ -121,6 +148,7 @@ private fun TimerScreenState(
         clockState.animateToTime(coroutineScope, it)
     }
 }
+
 
 @OptIn(ExperimentalResourceApi::class)
 @Composable
@@ -155,7 +183,7 @@ private fun Moon(
     LaunchedEffect(enabled, animationState.progress) {
         when {
             enabled -> isPLaying = true
-            enabled.not() && animationState.progress < 0.05F -> isPLaying = false
+            animationState.progress < 0.05F -> isPLaying = false
         }
     }
 }
