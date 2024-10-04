@@ -36,8 +36,6 @@ import kottieComposition.rememberKottieComposition
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import timetosleepkmp.composeapp.generated.resources.Res
 import utils.KottieConstants
-import java.io.BufferedReader
-import java.io.InputStreamReader
 
 @Composable
 fun MainScreen(
@@ -185,29 +183,5 @@ private fun Moon(
             enabled -> isPLaying = true
             animationState.progress < 0.05F -> isPLaying = false
         }
-    }
-}
-
-fun runCommand(command: String): String {
-    val processBuilder = ProcessBuilder()
-    // Split command into arguments
-    processBuilder.command(command.split(" "))
-
-    try {
-        val process = processBuilder.start()
-        val reader = BufferedReader(InputStreamReader(process.inputStream))
-        val output = StringBuilder()
-        var line: String?
-
-        while (reader.readLine().also { line = it } != null) {
-            output.append(line).append("\n")
-        }
-
-        val exitCode = process.waitFor()
-        println("Exit code: $exitCode")
-        return output.toString()
-    } catch (e: Exception) {
-        e.printStackTrace()
-        return "Error: ${e.message}"
     }
 }

@@ -4,6 +4,7 @@ import com.vadmax.timetosleep.domain.usecases.local.GetConnectQRData
 import com.vadmax.timetosleep.domain.usecases.local.GetConnectQRDataImpl
 import com.vadmax.timetosleep.domain.usecases.local.GetLocalIPAddress
 import com.vadmax.timetosleep.domain.usecases.local.GetLocalIPAddressImpl
+import com.vadmax.timetosleep.domain.usecases.local.TurnOff
 import com.vadmax.timetosleep.domain.usecases.remote.GetPhoneConnected
 import com.vadmax.timetosleep.domain.usecases.remote.GetPhoneConnectedImpl
 import com.vadmax.timetosleep.domain.usecases.remote.GetSelectedTime

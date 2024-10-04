@@ -14,6 +14,7 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberTrayState
 import androidx.compose.ui.window.rememberWindowState
 import com.vadmax.timetosleep.di.ViewModelModule
+import com.vadmax.timetosleep.di.nativeUseCasesModule
 import com.vadmax.timetosleep.di.repositoriesModule
 import com.vadmax.timetosleep.domain.di.domainModules
 import com.vadmax.timetosleep.server.di.remoteModules
@@ -39,12 +40,18 @@ fun main() {
         runServer()
     }
     application {
+        val windowState = rememberWindowState(
+            position = WindowPosition.Aligned(Alignment.BottomEnd),
+            size = DpSize(500.dp, 500.dp)
+        )
         var showApp by remember { mutableStateOf(true) }
         val trayState = rememberTrayState()
         Tray(
             icon = painterResource(Res.drawable.ic_launcher_round),
             state = trayState,
-            onAction = { showApp = true },
+            onAction = {
+                showApp = true
+            },
             menu = {
                 Item(
                     text = "Close",
@@ -53,14 +60,12 @@ fun main() {
                         exitApplication()
                     },
                 )
-            }
+            },
+            tooltip = "Time To Sleep",
         )
         if (showApp) {
             Window(
-                state = rememberWindowState(
-                    position = WindowPosition.Aligned(Alignment.BottomEnd),
-                    size = DpSize(500.dp, 500.dp)
-                ),
+                state = windowState,
                 onCloseRequest = { showApp = false },
                 title = "Time To Sleep",
                 resizable = false,
@@ -77,6 +82,7 @@ private fun initKoin(): Koin {
         modules(
             listOf(
                 ViewModelModule().module,
+                nativeUseCasesModule,
                 repositoriesModule,
                 module { single { CoroutineScope(Dispatchers.Main) } }
             ) + domainModules + remoteModules,

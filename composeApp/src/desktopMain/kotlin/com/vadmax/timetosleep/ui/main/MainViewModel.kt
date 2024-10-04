@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.vadmax.timetosleep.data.TimeUIModel
 import com.vadmax.timetosleep.domain.usecases.local.GetConnectQRData
 import com.vadmax.timetosleep.domain.usecases.remote.GetPhoneConnected
-import com.vadmax.timetosleep.repositories.TimerControlRepository
+import com.vadmax.timetosleep.domain.repositories.TimerControlRepository
 import com.vadmax.timetosleep.ui.main.ui.MainScreenState
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
