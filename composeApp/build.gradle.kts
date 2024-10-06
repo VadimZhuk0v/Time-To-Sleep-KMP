@@ -57,12 +57,25 @@ ksp {
 
 compose.desktop {
     application {
+        buildTypes.release.proguard {
+            version.set("7.5.0")
+            obfuscate.set(false)
+            optimize.set(false)
+            joinOutputJars.set(true)
+        }
         mainClass = "com.vadmax.timetosleep.MainKt"
-
         nativeDistributions {
+            outputBaseDir.set(File("${projectDir.parentFile.path}/distribute"))
             targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
             packageName = "com.vadmax.timetosleep"
             packageVersion = "1.0.0"
+            vendor = "VadMax"
+            windows {
+                menuGroup = "VadMax"
+                dirChooser = true
+                installationPath = "C:\\Program Files\\Time To Sleep\\"
+                iconFile.set(File("${projectDir.parentFile.path}/distribute/app_icon.ico"))
+            }
         }
     }
 }

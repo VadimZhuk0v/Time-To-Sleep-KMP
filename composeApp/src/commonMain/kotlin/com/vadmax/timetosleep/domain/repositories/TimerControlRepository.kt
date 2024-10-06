@@ -17,6 +17,7 @@ import com.vadmax.timetosleep.utils.extentions.second
 import com.vadmax.timetosleep.utils.flow.EventFlow
 import com.vadmax.timetosleep.utils.flow.MutableEventFlow
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -83,6 +84,7 @@ internal class TimerControlRepositoryImpl(
         }
     }
 
+    @OptIn(FlowPreview::class)
     private fun collectEnabled() {
         coroutineScope.launch {
             combine(enabled, getSelectedTime()) { enabled, selectedTime ->
@@ -121,7 +123,13 @@ internal class TimerControlRepositoryImpl(
         val now = Calendar.getInstance()
         val delayMillis = calculateToTurnOffDelay(date)
         val minutesDiff = Duration.between(now.toInstant(), date.toInstant()).toMinutes()
-        sendNotification("PC will be turned at ${date.get(Calendar.HOUR_OF_DAY)}:${date.get(Calendar.MINUTE)}")
+        sendNotification(
+            "PC will be turned off at ${date.get(Calendar.HOUR_OF_DAY)}:${
+                date.get(
+                    Calendar.MINUTE
+                )
+            }"
+        )
         if (minutesDiff > 5) {
             val beforeNotificationDelay = delayMillis - 5.minutes.inWholeMilliseconds
             delay(beforeNotificationDelay)
