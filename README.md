@@ -22,7 +22,7 @@ Or do the same remotely via Android app</p>
 
 
 1. Run msi [installer](https://drive.google.com/file/d/1P0641R-hzcdQr6-ImCPD6ymO13-DZf6j/view?usp=sharing)
-2. Make sure port 9006 is opened
+2. Make sure port 9006 is open
 3. Run the app
 
 <h2 align="left">Technologies</h4>
@@ -45,7 +45,7 @@ Or do the same remotely via Android app</p>
 ###  
 
 <div align="left">  
-  <img height="400" src="https://github.com/VadimZhuk0v/TimeToSleep/blob/main/assets/phne.gif?raw=true"  />  
+  <img height="400" src="https://github.com/VadimZhuk0v/TimeToSleep/blob/main/assets/phone.gif?raw=true"  />  
 </div>  
 
 ###  

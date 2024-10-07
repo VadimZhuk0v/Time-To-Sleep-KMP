@@ -3,6 +3,7 @@ package com.vadmax.timetosleep.server.repository
 import co.touchlab.kermit.Logger
 import com.vadimax.timetosleep.remote.rcp.service.PCService
 import com.vadimax.timetosleep.remote.rcp.service.PCServiceImpl
+import com.vadmax.timetosleep.domain.usecases.local.TurnOff
 import com.vadmax.timetosleep.domain.usecases.remote.GetSelectedTime
 import com.vadmax.timetosleep.domain.usecases.remote.GetTimerEnabled
 import com.vadmax.timetosleep.domain.usecases.remote.SetPhoneConnected
@@ -28,6 +29,7 @@ internal class PCServerRepositoryImpl(
     private val getTimerEnabled: GetTimerEnabled,
     private val setEnabled: SetTimerEnable,
     private val setPhoneConnected: SetPhoneConnected,
+    private val turnOff: TurnOff,
 ) : PCServerRepository {
 
 
@@ -49,6 +51,7 @@ internal class PCServerRepositoryImpl(
                             getTimerEnabled = getTimerEnabled,
                             setEnabled = setEnabled,
                             setPhoneConnected = setPhoneConnected,
+                            turnOff = turnOff,
                         )
                     }
                 }

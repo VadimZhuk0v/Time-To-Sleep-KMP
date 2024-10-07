@@ -14,6 +14,7 @@ internal val repositoriesModule = module {
             get(),
             get(),
             get(),
+            get(),
         )
     }
     factory<StartServer> { StartServerImpl(get()) }

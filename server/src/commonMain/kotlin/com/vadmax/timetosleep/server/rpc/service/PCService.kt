@@ -1,6 +1,7 @@
 package com.vadimax.timetosleep.remote.rcp.service
 
 import co.touchlab.kermit.Logger
+import com.vadmax.timetosleep.domain.usecases.local.TurnOff
 import com.vadmax.timetosleep.domain.usecases.remote.GetSelectedTime
 import com.vadmax.timetosleep.domain.usecases.remote.GetTimerEnabled
 import com.vadmax.timetosleep.domain.usecases.remote.SetPhoneConnected
@@ -34,6 +35,8 @@ interface PCService : RPC {
 
     suspend fun listenEnable(): Flow<Boolean>
 
+    suspend fun turnOff()
+
 }
 
 class PCServiceImpl(
@@ -42,6 +45,7 @@ class PCServiceImpl(
     private val getSelectedTime: GetSelectedTime,
     private val getTimerEnabled: GetTimerEnabled,
     private val setEnabled: SetTimerEnable,
+    private val turnOff: TurnOff,
     private val setPhoneConnected: SetPhoneConnected,
 ) : PCService {
 
@@ -78,6 +82,10 @@ class PCServiceImpl(
 
     override suspend fun sendEnable(value: Boolean) {
         setEnabled(value)
+    }
+
+    override suspend fun turnOff() {
+        turnOff.invoke()
     }
 
 }
